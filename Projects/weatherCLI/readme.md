@@ -4,7 +4,7 @@ Welcome to my CLI weather app! This is a simple command-line tool that provides 
 
 ## API Key
 
-This app uses the WeatherAPI to fetch weather data. You'll need to sign up on their website and obtain an API key. Once you have the API key, and place you API key inside the variable on line 43 in the main.go file.
+This app uses the WeatherAPI to fetch weather data. You'll need to sign up on their website and obtain an API key. Once you have the API key, place your key inside the variable on line 43 in the main.go file.
 
 ## Contributions
 
