@@ -7,6 +7,8 @@ import (
 type Item struct {
 	Value         float64 // Valor calculado de utilidade por peso
 	OriginalIndex int     // Índice original do item antes de ordenação
+	Peso          int     // Peso do item
+	Quantidade    int     // Quantidade do item
 }
 
 func selectionSortDecrescente(arr []Item) []Item {
@@ -35,13 +37,9 @@ func getInput() (int, int, int, error) {
 	return a, b, c, err
 }
 
-func utilidadePeso(a, b int) float64 {
-	return float64(a) / float64(b)
-}
-
 func main() {
 	items := []Item{} // Array de itens, usando a nova struct
-
+	capacidadeMochila := 0
 	for {
 		utilidade, peso, quantidade, err := getInput()
 		if err != nil {
@@ -50,21 +48,23 @@ func main() {
 		}
 
 		if utilidade == -1 && peso == -1 && quantidade == -1 {
+			fmt.Print("Qual a capacidade da mochila? ")
+			fmt.Scan(&capacidadeMochila)
 			break
 		}
 
-		calculo := utilidadePeso(utilidade, peso)
+		calculo := float64(utilidade) / float64(peso)
 
 		// Criar uma instância da struct Item e adicionar ao array
-		items = append(items, Item{Value: calculo, OriginalIndex: len(items)})
+		items = append(items, Item{Value: calculo, OriginalIndex: len(items), Peso: peso, Quantidade: quantidade})
 	}
 
 	sortedItems := selectionSortDecrescente(items)
 
-	// Imprimir os índices originais dos itens após ordenação
 	for _, item := range sortedItems {
 		originalIndex := item.OriginalIndex
-		value := item.Value
-		fmt.Printf("Índice Original: %d, Valor: %.2f\n", originalIndex, value)
+		peso := item.Peso
+		quantidade := item.Quantidade
+		fmt.Printf("Índice: %d, Peso: %d, Quantidade: %d\n", originalIndex, peso, quantidade)
 	}
 }
