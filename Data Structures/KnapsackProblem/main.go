@@ -37,6 +37,13 @@ func getInput() (int, int, int, error) {
 	return a, b, c, err
 }
 
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
 func main() {
 	items := []Item{} // Array de itens, usando a nova struct
 	capacidadeMochila := 0
@@ -61,10 +68,14 @@ func main() {
 
 	sortedItems := selectionSortDecrescente(items)
 
+	currentWeight := 0
 	for _, item := range sortedItems {
-		originalIndex := item.OriginalIndex
-		peso := item.Peso
-		quantidade := item.Quantidade
-		fmt.Printf("Índice: %d, Peso: %d, Quantidade: %d\n", originalIndex, peso, quantidade)
+		if currentWeight+item.Peso <= capacidadeMochila && item.Quantidade > 0 {
+			quantidadeToAdd := min(item.Quantidade, (capacidadeMochila-currentWeight)/item.Peso)
+			if quantidadeToAdd > 0 {
+				fmt.Printf("%d %d\n", item.OriginalIndex, quantidadeToAdd)
+				currentWeight += quantidadeToAdd * item.Peso
+			}
+		}
 	}
 }
